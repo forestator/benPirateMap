@@ -1,7 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import * as L from 'leaflet';
-import {MarkerService} from '../services/marker.service';
-import {PopupService} from '../services/popup.service';
+import {CRS, Map, MapOptions} from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -9,25 +8,31 @@ import {PopupService} from '../services/popup.service';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements AfterViewInit {
-  private map: any;
+  mapOptions: MapOptions = {};
+  private map: Map;
 
-  constructor(private markerService: MarkerService) {
+  constructor() {
   }
 
   ngAfterViewInit(): void {
     this.initMap();
-    // this.markerService.makeCapitalMarkers(this.map);
-    // this.markerService.makeCapitalCircleMarkers(this.map);
   }
 
   private initMap(): void {
-    const map = L.map('map', {
-      crs: L.CRS.Simple
-    });
+    const bounds: any = [[0, 0], [700, 980]];
+    this.mapOptions.maxBounds = bounds;
+    this.mapOptions.crs = CRS.Simple;
 
-    const bounds = [[0, 0], [1000, 1000]];
-    const image = L.imageOverlay('assets/map/carteNO.jpg', [[0, 0], [1000, 1000]]).addTo(map);
+    this.map = L.map('map', this.mapOptions);
 
-    map.fitBounds([[0, 0], [1000, 1000]]);
+    L.imageOverlay('assets/map/carteNO.jpg', bounds).addTo(this.map);
+
+    this.map.fitBounds(bounds);
+    this.map.on('click', (ev) =>  this.clickEvent(ev));
+  }
+
+  private clickEvent(ev: any) {
+    const marker = L.marker([ev.latlng.lat, ev.latlng.lng]).addTo(this.map);
+    marker.bindPopup('On peut marquer des trucs !');
   }
 }
