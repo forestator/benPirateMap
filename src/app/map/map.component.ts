@@ -14,7 +14,7 @@ import {MarkerService} from '../marker.service';
 export class MapComponent implements OnInit, AfterViewInit {
   mapOptions: MapOptions = {};
   private map: Map;
-  private modeAjout = false;
+  modeAjout = false;
 
   constructor(public dialog: MatDialog, private markerService: MarkerService) {
   }

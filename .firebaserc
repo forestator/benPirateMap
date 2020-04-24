@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "benpiratemap"
+  },
+  "targets": {
+    "benpiratemap": {
+      "hosting": {
+        "benMapPirates": [
+          "benpiratemap"
+        ]
+      }
+    }
   }
 }
