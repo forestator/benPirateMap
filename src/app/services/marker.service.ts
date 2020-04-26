@@ -58,7 +58,7 @@ export class MarkerService {
    */
   private getMarkers() {
     firebase.database().ref('/markers')
-      .on('value', (data: DataSnapshot) => {
+      .once('value', (data: DataSnapshot) => {
           this.markers = data.val() ? data.val() : [];
           this.markers.forEach(myMarker => this.markerToMap(myMarker));
         }
