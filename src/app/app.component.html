@@ -1,2 +1,5 @@
 <app-map></app-map>
-<mat-checkbox (change)="ajoutChange($event)">Mode ajout</mat-checkbox>
+<div class="toolbar">
+  <mat-checkbox (change)="ajoutChange($event)">Mode ajout</mat-checkbox>
+  <button mat-button (click)="supprimerMarkers()">Supprimer des markers</button>
+</div>

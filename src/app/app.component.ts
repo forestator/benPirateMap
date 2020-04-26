@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {latLng, MapOptions, tileLayer} from 'leaflet';
-import {MatCheckboxChange} from '@angular/material';
-import {MarkerService} from './marker.service';
+import {MatCheckboxChange, MatDialog} from '@angular/material';
+import {MarkerService} from './services/marker.service';
+import {SupressionDialogComponent} from './supression-dialog/supression-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +11,23 @@ import {MarkerService} from './marker.service';
 export class AppComponent {
   title = 'benMapPirates';
 
-  constructor(private markerService: MarkerService) {
+  constructor(private markerService: MarkerService, public dialog: MatDialog) {
   }
 
+  /**
+   * Annonce le changement d'état pour la checkbox
+   * @param $event
+   */
   ajoutChange($event: MatCheckboxChange) {
     this.markerService.subModeAjout.next($event.checked);
+  }
+
+  /**
+   * Ouvre la dialog pour supprimer les markers
+   */
+  supprimerMarkers() {
+    this.dialog.open(SupressionDialogComponent, {
+      width: '40vw'
+    });
   }
 }

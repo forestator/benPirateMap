@@ -1,10 +1,9 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {CRS, Layer, Map, MapOptions} from 'leaflet';
-import {MarkerOptions} from 'leaflet';
 import {MatDialog} from '@angular/material';
 import {InfoDialogComponent} from '../info-dialog/info-dialog.component';
-import {MarkerService} from '../marker.service';
+import {MarkerService} from '../services/marker.service';
 
 @Component({
   selector: 'app-map',
@@ -20,9 +19,15 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    // Ajoute le marker à la map
     this.markerService.subMarkers.subscribe(marker => {
       marker.addTo(this.map);
     });
+    // Supprime le marker de la map
+    this.markerService.subRemovedMarker.subscribe(marker => {
+      this.map.removeLayer(marker);
+    });
+    // Passe en mod ajout de marker
     this.markerService.subModeAjout.subscribe(rep => {
       this.modeAjout = rep;
     });
@@ -32,6 +37,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.initMap();
   }
 
+  /**
+   * Initialisation de la carte
+   */
   private initMap(): void {
     const bounds: any = [[0, 0], [700, 980]];
     this.mapOptions.maxBounds = bounds;
@@ -39,12 +47,16 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     this.map = L.map('map', this.mapOptions);
 
-    L.imageOverlay('assets/map/carteNO.jpg', bounds).addTo(this.map);
+    L.imageOverlay('assets/map/Carte_NO.jpg', bounds).addTo(this.map);
 
     this.map.fitBounds(bounds);
     this.map.on('click', (ev) => this.openDialog(ev));
   }
 
+  /**
+   * Si en mode ajout on ouvre la dialog pour ajouter un marker
+   * @param ev
+   */
   openDialog(ev: any): void {
     if (this.modeAjout) {
       this.dialog.open(InfoDialogComponent, {

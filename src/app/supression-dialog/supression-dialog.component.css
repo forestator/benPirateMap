@@ -1,0 +1,14 @@
+.table-container {
+  height: 50vh;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.button-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}

@@ -10,16 +10,26 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
 import {InfoDialogComponent} from './info-dialog/info-dialog.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule, MatTableModule
+} from '@angular/material';
 import {FormsModule} from '@angular/forms';
-import {MarkerService} from './marker.service';
+import {MarkerService} from './services/marker.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { SupressionDialogComponent } from './supression-dialog/supression-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    InfoDialogComponent
+    InfoDialogComponent,
+    SupressionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,13 +37,13 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    BrowserAnimationsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule, MatIconModule, DragDropModule, MatCheckboxModule,
+    BrowserAnimationsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule, MatIconModule, DragDropModule, MatCheckboxModule, MatButtonToggleModule, MatTableModule,
   ],
   providers: [
     MarkerService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [InfoDialogComponent]
+  entryComponents: [InfoDialogComponent, SupressionDialogComponent]
 })
 export class AppModule {
 }

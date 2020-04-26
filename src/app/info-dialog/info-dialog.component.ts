@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry} from '@angular/material';
-import {MarkerService} from '../marker.service';
+import {MarkerService} from '../services/marker.service';
 import {Marker, MarkerOptions} from 'leaflet';
 import * as L from 'leaflet';
 import {mark} from '@angular/compiler-cli/src/ngtsc/perf/src/clock';
+import {MyMarker} from '../dto/my-marker';
 
 @Component({
   selector: 'app-info-dialog',
@@ -20,30 +21,19 @@ export class InfoDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { event: any }) {
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
+  /**
+   * Ajoute le nouveau maker
+   */
   setNewMarker() {
-    const icon = L.icon({
-      iconUrl: `assets/marker/1x/baseline_${this.selectedMarker}_black_18dp.png`,
-      iconSize: [20, 30], // size of the icon
-      shadowSize: [20, 30], // size of the shadow
-      iconAnchor: [20, 30], // point of the icon which will correspond to marker's location
-      popupAnchor: [-10, -30] // point from which the popup should open relative to the iconAnchor
-    });
-
-    const markerOptions: MarkerOptions = {};
-    markerOptions.icon = icon;
-
-
-    const marker = L.marker([this.data.event.latlng.lat, this.data.event.latlng.lng], markerOptions);
-    marker.bindPopup(this.popupText);
-    this.markerService.subMarkers.next(marker);
-
+    this.markerService.addMarkerToMap(new MyMarker(this.data.event.latlng.lat, this.data.event.latlng.lng,
+      this.selectedMarker, this.popupText));
     this.dialogRef.close();
   }
 
+  /**
+   * Sélectionne l'icôné
+   * @param icon
+   */
   setSelectedIicon(icon: string) {
     this.selectedMarker = icon;
   }
