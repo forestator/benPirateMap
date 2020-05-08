@@ -1,9 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatIconRegistry} from '@angular/material';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {MarkerService} from '../services/marker.service';
-import {Marker, MarkerOptions} from 'leaflet';
-import * as L from 'leaflet';
-import {mark} from '@angular/compiler-cli/src/ngtsc/perf/src/clock';
 import {MyMarker} from '../dto/my-marker';
 
 @Component({
@@ -32,7 +29,6 @@ export class InfoDialogComponent {
 
   /**
    * Sélectionne l'icôné
-   * @param icon
    */
   setSelectedIicon(icon: string) {
     this.selectedMarker = icon;

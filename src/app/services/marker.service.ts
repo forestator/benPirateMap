@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import * as firebase from 'firebase';
 import {Subject} from 'rxjs';
-import {Marker, MarkerOptions} from 'leaflet';
-import DataSnapshot = firebase.database.DataSnapshot;
-import {MyMarker} from '../dto/my-marker';
 import * as L from 'leaflet';
+import {Marker, MarkerOptions} from 'leaflet';
+import {MyMarker} from '../dto/my-marker';
 import {environment} from '../../environments/environment';
+import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class MarkerService {
   subMarkers: Subject<Marker> = new Subject<Marker>();
   // Etat de la checkbox en mode ajout
   subModeAjout: Subject<boolean> = new Subject<boolean>();
-  // sub poru la suppression de markers sur la map
+  // sub pour la suppression de markers sur la map
   subRemovedMarker: Subject<Marker> = new Subject<Marker>();
 
 

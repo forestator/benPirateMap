@@ -8,11 +8,21 @@
               aria-label="Example home icon"
               (click)="setSelectedIicon('home')">home
     </mat-icon>
+    <mat-icon aria-hidden="false" [class.selected]="selectedMarker === 'location_city'"
+              aria-label="Example location_city"
+              (click)="setSelectedIicon('location_city')">location_city
+    </mat-icon>
+    <img src="assets/marker/1x/baseline_island_black_18dp.png" height="24" width="24"
+         [class.selected]="selectedMarker === 'island'"
+         (click)="setSelectedIicon('island')"/>
+    <img src="assets/marker/1x/baseline_village_black_18dp.png" height="24" width="24"
+         [class.selected]="selectedMarker === 'village'"
+         (click)="setSelectedIicon('village')"/>
+    <img src="assets/marker/1x/baseline_underwater_black_18dp.png" height="24" width="24"
+         [class.selected]="selectedMarker === 'underwater'"
+         (click)="setSelectedIicon('underwater')"/>
     <mat-icon [class.selected]="selectedMarker === 'beenhere'" aria-hidden="false" aria-label="Example beenhere icon"
               (click)="setSelectedIicon('beenhere')">beenhere
-    </mat-icon>
-    <mat-icon [class.selected]="selectedMarker === 'hotel'" aria-hidden="false" aria-label="Example hotel icon"
-              (click)="setSelectedIicon('hotel')">hotel
     </mat-icon>
   </div>
   <mat-form-field>

@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {MatCheckboxChange, MatDialog} from '@angular/material';
+import {MatCheckboxChange, MatDialog, MatIconRegistry} from '@angular/material';
 import {MarkerService} from './services/marker.service';
 import {SupressionDialogComponent} from './supression-dialog/supression-dialog.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,14 @@ import {SupressionDialogComponent} from './supression-dialog/supression-dialog.c
 export class AppComponent {
   title = 'benMapPirates';
 
-  constructor(private markerService: MarkerService, public dialog: MatDialog) {
+  constructor(private markerService: MarkerService,
+              public dialog: MatDialog,
+              private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIcon(
+      `island`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/marker/1x/baseline_island_black_18dp.png')
+    );
   }
 
   /**

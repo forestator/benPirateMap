@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialogRef, MatTableDataSource} from '@angular/material';
 import {MarkerService} from '../services/marker.service';
 import {MyMarker} from '../dto/my-marker';
 import {SelectionModel} from '@angular/cdk/collections';
+import {IconesPasMaterial} from '../dto/icones-pas-material.enum';
 
 @Component({
   selector: 'app-supression-dialog',
@@ -13,6 +14,7 @@ export class SupressionDialogComponent {
   dataSource = new MatTableDataSource<any>(this.markerService.markers);
   displayedColumns: string[] = ['select', 'icon', 'text'];
   selection = new SelectionModel<MyMarker>(true, []);
+  iconesNonMat = Object.values(IconesPasMaterial);
 
   constructor(
     public dialogRef: MatDialogRef<SupressionDialogComponent>,
@@ -39,5 +41,14 @@ export class SupressionDialogComponent {
   supprimerSelection() {
     this.selection.selected.forEach(marker => this.markerService.removeMarker(marker));
     this.dialogRef.close();
+  }
+
+  /**
+   * Si c'est une icone material on l'affiche avec lla balise mat-icon
+   * sinon img
+   * @param icon
+   */
+  isIconMat(icon: string): boolean {
+    return !this.iconesNonMat.includes(icon);
   }
 }
