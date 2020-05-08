@@ -1,6 +1,4 @@
-import {MarkerOptions} from 'leaflet';
-
-export class MyMarker {
+export class MarkerIcon {
   lat: number;
   lng: number;
   icon: string;

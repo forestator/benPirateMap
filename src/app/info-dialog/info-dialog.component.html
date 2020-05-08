@@ -3,33 +3,83 @@
     cdkDragHandle>Ajouter un marker</h1>
 <div mat-dialog-content>
   <p>Quel type de marker ?</p>
-  <div class="list-icons">
-    <mat-icon aria-hidden="false" [class.selected]="selectedMarker === 'home'"
-              aria-label="Example home icon"
-              (click)="setSelectedIicon('home')">home
-    </mat-icon>
-    <mat-icon aria-hidden="false" [class.selected]="selectedMarker === 'location_city'"
-              aria-label="Example location_city"
-              (click)="setSelectedIicon('location_city')">location_city
-    </mat-icon>
-    <img src="assets/marker/1x/baseline_island_black_18dp.png" height="24" width="24"
-         [class.selected]="selectedMarker === 'island'"
-         (click)="setSelectedIicon('island')"/>
-    <img src="assets/marker/1x/baseline_village_black_18dp.png" height="24" width="24"
-         [class.selected]="selectedMarker === 'village'"
-         (click)="setSelectedIicon('village')"/>
-    <img src="assets/marker/1x/baseline_underwater_black_18dp.png" height="24" width="24"
-         [class.selected]="selectedMarker === 'underwater'"
-         (click)="setSelectedIicon('underwater')"/>
-    <mat-icon [class.selected]="selectedMarker === 'beenhere'" aria-hidden="false" aria-label="Example beenhere icon"
-              (click)="setSelectedIicon('beenhere')">beenhere
-    </mat-icon>
-  </div>
-  <mat-form-field>
-    <mat-label>Text de la popup sur le marker</mat-label>
-    <input matInput [(ngModel)]="popupText">
-  </mat-form-field>
+  <mat-radio-group aria-label="Select an option" [(ngModel)]="typeNewMarker" (ngModelChange)="resetTexte()">
+    <mat-radio-button value="icon">Icône</mat-radio-button>
+    <mat-radio-button value="text">Texte</mat-radio-button>
+  </mat-radio-group>
+  <ng-container *ngIf="typeNewMarker === 'icon'">
+    <div class="list-icons">
+      <mat-icon aria-hidden="false" [class.selected]="selectedMarker === 'home'"
+                aria-label="Example home icon"
+                (click)="setSelectedIicon('home')">home
+      </mat-icon>
+      <mat-icon aria-hidden="false" [class.selected]="selectedMarker === 'location_city'"
+                aria-label="Example location_city"
+                (click)="setSelectedIicon('location_city')">location_city
+      </mat-icon>
+      <img src="assets/marker/1x/baseline_island_black_18dp.png" height="24" width="24"
+           [class.selected]="selectedMarker === 'island'"
+           (click)="setSelectedIicon('island')"/>
+      <img src="assets/marker/1x/baseline_village_black_18dp.png" height="24" width="24"
+           [class.selected]="selectedMarker === 'village'"
+           (click)="setSelectedIicon('village')"/>
+      <img src="assets/marker/1x/baseline_underwater_black_18dp.png" height="24" width="24"
+           [class.selected]="selectedMarker === 'underwater'"
+           (click)="setSelectedIicon('underwater')"/>
+      <mat-icon [class.selected]="selectedMarker === 'beenhere'" aria-hidden="false"
+                aria-label="Example beenhere icon"
+                (click)="setSelectedIicon('beenhere')">beenhere
+      </mat-icon>
+    </div>
+    <mat-form-field>
+      <mat-label>Texte de la popup sur le marker</mat-label>
+      <input matInput [(ngModel)]="popupText">
+    </mat-form-field>
+  </ng-container>
+  <ng-container *ngIf="typeNewMarker === 'text'">
+    <mat-form-field>
+      <mat-label>Texte à ajouter sur la carte</mat-label>
+      <input matInput [(ngModel)]="texteSurCarte">
+    </mat-form-field>
+    <mat-radio-group aria-label="taille" [(ngModel)]="tailleTexte">
+      <mat-radio-button value="texte-petit">
+        <div class="texte-petit">petit</div>
+      </mat-radio-button>
+      <mat-radio-button value="texte-normal">
+        <div class="texte-normal">normal</div>
+      </mat-radio-button>
+      <mat-radio-button value="texte-grand">
+        <div class="texte-grand">grand</div>
+      </mat-radio-button>
+    </mat-radio-group>
+    <mat-radio-group aria-label="couleur" [(ngModel)]="couleurTexte">
+      <mat-radio-button value="couleur-noir">
+        <div class="couleur-noir">noir</div>
+      </mat-radio-button>
+      <mat-radio-button value="couleur-rouge">
+        <div class="couleur-rouge">rouge</div>
+      </mat-radio-button>
+      <mat-radio-button value="couleur-bleu">
+        <div class="couleur-bleu">bleu</div>
+      </mat-radio-button>
+      <mat-radio-button value="couleur-vert">
+        <div class="couleur-vert">vert</div>
+      </mat-radio-button>
+    </mat-radio-group>
+    <mat-radio-group aria-label="font" [(ngModel)]="fontStyle">
+      <mat-radio-button value="font-normal">
+        <div class="font-normal">Normal</div>
+      </mat-radio-button>
+      <mat-radio-button value="font-italique">
+        <div class="font-italique">Italique</div>
+      </mat-radio-button>
+      <mat-radio-button value="font-gras">
+        <div class="font-gras">Gras</div>
+      </mat-radio-button>
+    </mat-radio-group>
+  </ng-container>
+
 </div>
 <div mat-dialog-actions>
-  <button mat-button [disabled]="!popupText"  (click)="setNewMarker()">Valider</button>
+  <button mat-button [disabled]="!popupText && !texteSurCarte" (click)="setNewMarker()">Valider</button>
 </div>

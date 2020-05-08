@@ -31,8 +31,13 @@
     </ng-container>
 
     <ng-container matColumnDef="text">
-      <th mat-header-cell *matHeaderCellDef>Texte Popup</th>
-      <td mat-cell *matCellDef="let element"> {{element.popupText}}</td>
+      <th mat-header-cell *matHeaderCellDef>Texte</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.popupText">{{element.popupText}}</ng-container>
+        <ng-container *ngIf="element.texte">
+          <p [class]="element.classe">{{element.texte}}</p>
+        </ng-container>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

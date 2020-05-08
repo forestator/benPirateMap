@@ -12,3 +12,38 @@ body {
 .cursorpointer #map {
   cursor: crosshair;
 }
+
+.texte-petit {
+  font-size: 0.7rem;
+}
+
+.texte-normal {
+  font-size: 1rem;
+}
+
+.texte-grand {
+  font-size: 1.5rem;
+}
+
+.couleur-noir {
+  color: black;
+}
+.couleur-rouge {
+  color: darkred;
+}
+.couleur-bleu {
+  color: darkblue;
+}
+.couleur-vert {
+  color: darkgreen;
+}
+
+.font-normal {
+  font-style: normal;
+}
+.font-italique {
+  font-style: italic;
+}
+.font-gras {
+  font-weight: bold;
+}

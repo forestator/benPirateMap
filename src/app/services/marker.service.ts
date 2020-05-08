@@ -3,8 +3,9 @@ import * as firebase from 'firebase';
 import {Subject} from 'rxjs';
 import * as L from 'leaflet';
 import {Marker, MarkerOptions} from 'leaflet';
-import {MyMarker} from '../dto/my-marker';
+import {MarkerIcon} from '../dto/marker-icon';
 import {environment} from '../../environments/environment';
+import {MarkerTexte} from '../dto/marker-texte';
 import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable({
@@ -12,7 +13,7 @@ import DataSnapshot = firebase.database.DataSnapshot;
 })
 export class MarkerService {
 
-  markers: MyMarker[] = [];
+  markers: Array<MarkerTexte | MarkerIcon> = [];
 
   markersLeaflet: Marker[] = [];
 
@@ -35,7 +36,7 @@ export class MarkerService {
    * Sauvegarde d'un marker et l'ajoute à la carte
    * @param myMarker
    */
-  addMarkerToMap(myMarker: MyMarker) {
+  addMarkerToMap(myMarker: MarkerIcon | MarkerTexte) {
     this.markers.push(myMarker);
     this.saveMarkers();
     this.markerToMap(myMarker);
@@ -45,9 +46,11 @@ export class MarkerService {
    * Transforme les MyMarker en markers pour la map leaflet
    * @param myMarker
    */
-  private markerToMap(myMarker: MyMarker) {
+  private markerToMap(myMarker: MarkerIcon | MarkerTexte) {
     const marker = L.marker([myMarker.lat, myMarker.lng], this.getMarkerOptions(myMarker));
-    marker.bindPopup(myMarker.popupText);
+    if (myMarker['popupText']) {
+      marker.bindPopup(myMarker['popupText']);
+    }
     this.markersLeaflet.push(marker);
     // Sub pour annoncer à la map l'ajout d'un nouveau marker
     this.subMarkers.next(marker);
@@ -69,7 +72,7 @@ export class MarkerService {
    * Supprimer un marker
    * @param marker
    */
-  removeMarker(marker: MyMarker) {
+  removeMarker(marker: MarkerIcon) {
     const markerIndex = this.markers.findIndex(
       (myMarker) => {
         if (marker.lat === myMarker.lat && marker.lng === myMarker.lng) {
@@ -98,14 +101,23 @@ export class MarkerService {
    * Spécifie les options pour l'icône du marker
    * @param myMarker
    */
-  private getMarkerOptions(myMarker: MyMarker): MarkerOptions {
-    const icon = L.icon({
-      iconUrl: `assets/marker/1x/baseline_${myMarker.icon}_black_18dp.png`,
-      iconSize: [20, 30], // size of the icon
-      shadowSize: [20, 30], // size of the shadow
-      iconAnchor: [20, 30], // point of the icon which will correspond to marker's location
-      popupAnchor: [-10, -30] // point from which the popup should open relative to the iconAnchor
-    });
+  private getMarkerOptions(myMarker: MarkerIcon | MarkerTexte): MarkerOptions {
+    let icon;
+    if (myMarker['icon']) {
+      icon = L.icon({
+        iconUrl: `assets/marker/1x/baseline_${myMarker['icon']}_black_18dp.png`,
+        iconSize: [20, 30], // size of the icon
+        shadowSize: [10, 30], // size of the shadow
+        iconAnchor: [10, 30], // point of the icon which will correspond to marker's location
+        popupAnchor: [-10, -30] // point from which the popup should open relative to the iconAnchor
+      });
+    } else {
+      const marker = myMarker as MarkerTexte;
+      icon = L.divIcon({
+        className: marker.classe,
+        html: marker.texte
+      });
+    }
     const markerOptions: MarkerOptions = {};
     markerOptions.icon = icon;
     return markerOptions;

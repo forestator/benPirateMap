@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
-import {CRS, Layer, Map, MapOptions} from 'leaflet';
+import {CRS, Map, MapOptions} from 'leaflet';
 import {MatDialog} from '@angular/material';
 import {InfoDialogComponent} from '../info-dialog/info-dialog.component';
 import {MarkerService} from '../services/marker.service';
@@ -60,7 +60,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   openDialog(ev: any): void {
     if (this.modeAjout) {
       this.dialog.open(InfoDialogComponent, {
-        width: '20vw',
+        width: '30vw',
         data: {event: ev}
       });
     }

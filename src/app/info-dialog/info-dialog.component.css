@@ -1,6 +1,7 @@
 .mat-dialog-content {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .list-icons {
@@ -12,4 +13,13 @@
 
 .selected {
   border: 2px solid dodgerblue;
+}
+
+mat-radio-button {
+  padding: 0.4rem;
+}
+
+mat-radio-group {
+  display: flex;
+  align-items: center;
 }

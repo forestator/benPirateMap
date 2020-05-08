@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MatDialogRef, MatTableDataSource} from '@angular/material';
 import {MarkerService} from '../services/marker.service';
-import {MyMarker} from '../dto/my-marker';
+import {MarkerIcon} from '../dto/marker-icon';
 import {SelectionModel} from '@angular/cdk/collections';
 import {IconesPasMaterial} from '../dto/icones-pas-material.enum';
 
@@ -13,7 +13,7 @@ import {IconesPasMaterial} from '../dto/icones-pas-material.enum';
 export class SupressionDialogComponent {
   dataSource = new MatTableDataSource<any>(this.markerService.markers);
   displayedColumns: string[] = ['select', 'icon', 'text'];
-  selection = new SelectionModel<MyMarker>(true, []);
+  selection = new SelectionModel<MarkerIcon>(true, []);
   iconesNonMat = Object.values(IconesPasMaterial);
 
   constructor(
