@@ -114,7 +114,7 @@ export class MarkerService {
     } else {
       const marker = myMarker as MarkerTexte;
       icon = L.divIcon({
-        className: marker.classe,
+        className: `marker-texte ${marker.classe}`,
         html: marker.texte
       });
     }

@@ -13,6 +13,10 @@ body {
   cursor: crosshair;
 }
 
+.marker-texte {
+  width: 300px !important;
+}
+
 .texte-petit {
   font-size: 0.7rem;
 }
