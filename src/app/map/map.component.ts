@@ -41,11 +41,11 @@ export class MapComponent implements OnInit, AfterViewInit {
    * Initialisation de la carte
    */
   private initMap(): void {
-    const bounds: any = [[0, 0], [3696, 5174]];
+    const bounds: any = [[0, 0], [10348, 7392]];
     this.mapOptions.maxBounds = bounds;
     this.mapOptions.crs = CRS.Simple;
-    this.mapOptions.minZoom = -2;
-    this.mapOptions.maxZoom = 2;
+    this.mapOptions.minZoom = -3;
+    this.mapOptions.maxZoom = 1;
 
     this.map = L.map('map', this.mapOptions);
 
