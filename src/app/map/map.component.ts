@@ -41,13 +41,15 @@ export class MapComponent implements OnInit, AfterViewInit {
    * Initialisation de la carte
    */
   private initMap(): void {
-    const bounds: any = [[0, 0], [700, 980]];
+    const bounds: any = [[0, 0], [3696, 5174]];
     this.mapOptions.maxBounds = bounds;
     this.mapOptions.crs = CRS.Simple;
+    this.mapOptions.minZoom = -2;
+    this.mapOptions.maxZoom = 2;
 
     this.map = L.map('map', this.mapOptions);
 
-    L.imageOverlay('assets/map/Carte_NO.jpg', bounds).addTo(this.map);
+    L.imageOverlay('assets/map/Map2on4Part.jpg', bounds).addTo(this.map);
 
     this.map.fitBounds(bounds);
     this.map.on('click', (ev) => this.openDialog(ev));
