@@ -17,6 +17,8 @@ export class MarkerService {
 
   markersLeaflet: Marker[] = [];
 
+  moovableMarker = ['boat', 'group'];
+
   // Sub pour l'ajout de marker sur la carte
   subMarkers: Subject<Marker> = new Subject<Marker>();
   // Etat de la checkbox en mode ajout
@@ -51,9 +53,32 @@ export class MarkerService {
     if (myMarker['popupText']) {
       marker.bindPopup(myMarker['popupText']);
     }
+
+    if (marker.options.draggable && this.moovableMarker.includes(marker.options.icon.options.className)) {
+      this.initMoovableMarker(marker);
+    }
+
     this.markersLeaflet.push(marker);
     // Sub pour annoncer à la map l'ajout d'un nouveau marker
     this.subMarkers.next(marker);
+  }
+
+  /**
+   * Init ship marker
+   * @param marker
+   */
+  private initMoovableMarker(marker: Marker<any>) {
+    marker.on('drag', (e) => {
+      const marker2 = e.target;
+      const position = marker2.getLatLng();
+    });
+
+    marker.on('dragend', (e) => {
+      const ma = this.markers.find(m => m['icon'] && m['icon'] === marker.options.icon.options.className);
+      ma.lat = e.target.getLatLng().lat;
+      ma.lng = e.target.getLatLng().lng;
+      this.saveMarkers();
+    });
   }
 
   /**
@@ -109,7 +134,8 @@ export class MarkerService {
         iconSize: [20, 30], // size of the icon
         shadowSize: [10, 30], // size of the shadow
         iconAnchor: [10, 30], // point of the icon which will correspond to marker's location
-        popupAnchor: [-10, -30] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [-10, -30], // point from which the popup should open relative to the iconAnchor
+        className: myMarker['icon']
       });
     } else {
       const marker = myMarker as MarkerTexte;
@@ -120,6 +146,7 @@ export class MarkerService {
     }
     const markerOptions: MarkerOptions = {};
     markerOptions.icon = icon;
+    markerOptions.draggable = this.moovableMarker.includes(myMarker['icon']);
     return markerOptions;
   }
 

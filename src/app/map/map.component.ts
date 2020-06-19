@@ -31,6 +31,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.markerService.subModeAjout.subscribe(rep => {
       this.modeAjout = rep;
     });
+
   }
 
   ngAfterViewInit(): void {
@@ -67,5 +68,4 @@ export class MapComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
 }
